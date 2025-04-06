@@ -1,4 +1,8 @@
 import './index.scss'
+import { useDispatch } from 'react-redux'
+import { addCart } from '../../../store/modules/takeaway'
+import { delCart } from '../../../store/modules/takeaway'
+import { useSelector } from 'react-redux'
 
 const Foods = ({
   id,
@@ -11,9 +15,12 @@ const Foods = ({
   like_ratio_desc,
   price,
   tag,
-  count =0
 }) => {
-
+  const dispatch = useDispatch()
+    // 从购物车中获取当前商品的数量
+    const cartList = useSelector(state => state.foods.cartList)
+    const count = cartList.find(item => item.id === id)?.count || 0
+  
   return (
     <dd className="cate-goods">
       <div className="goods-img-wrap">
@@ -38,9 +45,33 @@ const Foods = ({
             {price}
           </div>
           <div className="goods-count">
-            <span className="minus"></span>
+            <span className="minus" onClick={()=>dispatch(delCart({
+              id,
+              picture,
+              name,
+              unit,
+              description,
+              food_tag_list,
+              month_saled,
+              like_ratio_desc,
+              price,
+              tag,
+              count: 1  
+            }))}></span>
             <span className="count">{count}</span>
-            <span className="plus"></span>
+            <span className="plus" onClick={() => dispatch(addCart({
+              id,
+              picture,
+              name,
+              unit,
+              description,
+              food_tag_list,
+              month_saled,
+              like_ratio_desc,
+              price,
+              tag,
+              count: 1  // 设置初始数量为1
+            }))}></span>
           </div>
         </div>
       </div>
