@@ -5,8 +5,11 @@ import './index.css';
 import { RouterProvider } from 'react-router-dom';
 import router from './router';
 
+//导入定制主题文件
+import '@/asset/theme.css'
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render( 
+root.render(
     <RouterProvider router={router} />
 );
 
